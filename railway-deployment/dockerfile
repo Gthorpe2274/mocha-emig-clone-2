@@ -1,0 +1,82 @@
+# Base image
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy only requirements for caching
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy app code
+COPY . .
+
+# Set Railway port and environment
+ENV PORT=8080
+ENV ENVIRONMENT=production  # change to "development" for local dev
+
+EXPOSE 8080
+
+# Run app: dev or prod mode, auto-detect framework
+CMD python - <<'EOF'
+import os
+import sys
+
+port = int(os.environ.get("PORT", 8080))
+env = os.environ.get("ENVIRONMENT", "production")
+
+try:
+    import flask
+    from main import app  # Flask app object
+    if env == "development":
+        app.run(host="0.0.0.0", port=port, debug=True, use_reloader=True)
+    else:
+        app.run(host="0.0.0.0", port=port)
+except ImportError:
+    try:
+        import uvicorn
+        from main import app  # FastAPI app object
+        if env == "development":
+            uvicorn.run(app, host="0.0.0.0", port=port, reload=True, log_level="info")
+        else:
+            uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
+    except ImportError:
+        print("No supported framework detected (Flask or FastAPI).", file=sys.stderr)
+        sys.exit(1)
+EOF
+3. Create Your .dockerignore File:
+
+Create a new file named .dockerignore directly inside your railway-deployment folder (i.e., railway-deployment/.dockerignore).
+Replace its entire content with the following, which is essential to keep your Docker image clean and prevent irrelevant frontend files from being copied:
+__pycache__/
+*.py[cod]
+*$py.class
+
+venv/
+.venv/
+env/
+.env/
+
+build/
+dist/
+*.egg-info/
+.eggs/
+
+*.log
+.coverage
+.pytest_cache/
+htmlcov/
+
+.vscode/
+.idea/
+*.swp
+
+.DS_Store
+Thumbs.db
+.git
+.gitignore
+*.env
+node_modules/
+src/react-app/
