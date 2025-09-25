@@ -1,3 +1,21 @@
+1. Go to [railway.app](https://railway.app)
+2. Create new project → Deploy from GitHub repo
+3. Select your existing repository
+4. **IMPORTANT**: Railway will automatically detect the railway.json config file
+5. Set environment variables:
+   - `API_KEY`: your-secure-api-key-here
+   - `PORT`: 8000 (Railway sets this automatically)
+
+### Step 7: Configure Build Settings in Railway
+**The railway.json and nixpacks.toml files will automatically configure Railway correctly.**
+
+If Railway doesn't auto-detect, manually set:
+- **Root Directory**: `railway-deployment`
+- **Build Command**: `pip install -r requirements.txt`
+- **Start Command**: `python main.py`
+
+
+OLDER NOTES
 # RAGatouille Railway Deployment - Multiple Solutions
 
 ## Quick Solutions (Try in Order)
