@@ -21,4 +21,4 @@ numpy>=1.24.0
 nltk==3.8.1
 scikit-learn==1.3.2
 
-# No RAGatouille - we'll use a simpler implementation
+# No RAGatouille - we'll use a simpler implementation.
