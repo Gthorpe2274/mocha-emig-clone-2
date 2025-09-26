@@ -1,26 +1,23 @@
-# Use Python 3.9 slim image
-FROM python:3.9-slim
+# Use Python 3.11 slim image (compatible with all your packages)
+FROM python:3.11-slim
 
-# Update system and install build-essential, plus necessary development tools for pandas
+# Update system and install build tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     python3-dev \
     gfortran \
+    gcc \
+    g++ \
     && rm -rf /var/lib/apt/lists/*
 
-# Ensure pip is available and upgraded
-RUN python -m ensurepip --upgrade
+# Upgrade pip
 RUN python -m pip install --upgrade pip
-RUN which pip && pip --version
 
 # Set working directory
 WORKDIR /app
 
 # Copy requirements first for better caching
 COPY requirements.txt .
-
-# Debug: Check if pip is available and show Python/pip versions
-RUN python --version && pip --version
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
@@ -29,11 +26,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Set environment variables
-ENV PORT=8000
 ENV PYTHONUNBUFFERED=1
 
-# Expose port
+# Expose port (Railway will override with $PORT)
 EXPOSE 8000
 
-# Start the FastAPI application
-CMD ["python", "main.py"]
+# Start the FastAPI application with uvicorn
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
