@@ -1,34 +1,34 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "0198c152-69c8-7918-a1cb-a063f87c02df",
+  "name": "mocha-emig-clone-2", 
   "main": "./src/worker/index.ts",
   "compatibility_date": "2025-06-17",
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
-"enabled": true
+    "enabled": true
   },
   "upload_source_maps": true,
   "assets": {
-"not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application"
   },
   "d1_databases": [
-{
-  "binding": "DB",
-  "database_name": "0198c152-69c8-7918-a1cb-a063f87c02df",
-  "database_id": "0198c152-69c8-7918-a1cb-a063f87c02df"
-}
+    {
+      "binding": "DB",
+      "database_name": "mocha-emig-db",
+      "database_id": "0198c152-69c8-7918-a1cb-a063f87c02df"
+    }
   ],
   "kv_namespaces": [
-{
-  "binding": "REPORTS_KV",
-  "id": "0198c152-69c8-7918-a1cb-a063f87c02df-reports",
-  "preview_id": "0198c152-69c8-7918-a1cb-a063f87c02df-reports-preview"
-}
+    {
+      "binding": "REPORTS_KV",
+      "id": "0198c152-69c8-7918-a1cb-a063f87c02df-reports",
+      "preview_id": "0198c152-69c8-7918-a1cb-a063f87c02df-reports-preview"
+    }
   ],
   "r2_buckets": [
-{
-  "binding": "R2_BUCKET",
-  "bucket_name": "0198c152-69c8-7918-a1cb-a063f87c02df"
-}
+    {
+      "binding": "R2_BUCKET",
+      "bucket_name": "mocha-emig-assets"
+    }
   ]
 }
